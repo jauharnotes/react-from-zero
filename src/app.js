@@ -1,19 +1,18 @@
 function App() {
   // styles
   const container = { textAlign: "center", marginTop: "20px" };
-  const [login, setLogin] = React.useState(false);
-  const judulRef = React.useRef(null);
 
-  React.useEffect(() => {
-    console.log(judulRef);
-    setTimeout(() => {
-      judulRef.current.textContent = "Aplikasi Dirubah";
-    }, 2000);
-  }, []);
+  const fruits = ["Apple", "Banana", "Orange", "Ganyong", "Banana"];
+
+  console.log(fruits);
 
   return (
     <div style={container}>
-      <h1 ref={judulRef}>Aplications</h1>
+      <ul>
+        {fruits.map(function (fruit, index) {
+          return <li key={index}>{fruit}</li>;
+        })}
+      </ul>
     </div>
   );
 }

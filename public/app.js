@@ -4,19 +4,15 @@ function App() {
     textAlign: "center",
     marginTop: "20px"
   };
-  const [login, setLogin] = React.useState(false);
-  const judulRef = React.useRef(null);
-  React.useEffect(() => {
-    console.log(judulRef);
-    setTimeout(() => {
-      judulRef.current.textContent = "Aplikasi Dirubah";
-    }, 2000);
-  }, []);
+  const fruits = ["Apple", "Banana", "Orange", "Ganyong", "Banana"];
+  console.log(fruits);
   return /*#__PURE__*/React.createElement("div", {
     style: container
-  }, /*#__PURE__*/React.createElement("h1", {
-    ref: judulRef
-  }, "Aplications"));
+  }, /*#__PURE__*/React.createElement("ul", null, fruits.map(function (fruit, index) {
+    return /*#__PURE__*/React.createElement("li", {
+      key: index
+    }, fruit);
+  })));
 }
 
 ReactDOM.render( /*#__PURE__*/React.createElement(App, null), document.getElementById("root"));
