@@ -3,29 +3,45 @@ function App() {
   const container = { textAlign: "center", marginTop: "20px" };
 
   // javascript logic
-  const [name, setName] = React.useState("Johar");
+  const [news, setNews] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  // menggunakan fetch then
+  // React.useEffect(function () {
+  //   const getData = fetch("https://api.spaceflightnewsapi.net/v3/blogs")
+  //     .then(function (response) {
+  //       return response.json();
+  //     })
+  //     .then(function (response) {
+  //       console.log(response);
+  //     });
+  // }, []);
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    console.log(`nama: ${name}`);
-  }
+  // menggunakan async await
+  React.useEffect(() => {
+    async function getData() {
+      const request = await fetch(
+        "https://api.spaceflightnewsapi.net/v3/blogs"
+      );
+      const response = await request.json();
+      setNews(response);
+      setLoading(false);
+    }
+
+    getData();
+  }, []);
 
   return (
     <div style={container}>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name: </label>
-          <input
-            type="text"
-            name="name"
-            value={name}
-            onChange={function (event) {
-              setName(event.target.value);
-            }}
-          />
-        </div>
-        <button type="submit">Kirim</button>
-      </form>
+      <h2>Data Fect</h2>
+      {loading ? (
+        <i>Loading....</i>
+      ) : (
+        <ul>
+          {news.map(function (item) {
+            return <li key={item.id}>{item.title}</li>;
+          })}
+        </ul>
+      )}
     </div>
   );
 }
