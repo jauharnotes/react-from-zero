@@ -1,47 +1,40 @@
 function App() {
   // styles
-  const container = { textAlign: "center", marginTop: "20px" };
+  const container = {
+    textAlign: "center",
+    marginTop: "20px",
+  };
+  const form = { margin: "20px 0 20px" };
 
   // javascript logic
-  const [news, setNews] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-  // menggunakan fetch then
-  // React.useEffect(function () {
-  //   const getData = fetch("https://api.spaceflightnewsapi.net/v3/blogs")
-  //     .then(function (response) {
-  //       return response.json();
-  //     })
-  //     .then(function (response) {
-  //       console.log(response);
-  //     });
-  // }, []);
+  const [activity, setActivity] = React.useState("");
+  const [todos, setTodos] = React.useState([]);
 
-  // menggunakan async await
-  React.useEffect(() => {
-    async function getData() {
-      const request = await fetch(
-        "https://api.spaceflightnewsapi.net/v3/blogs"
-      );
-      const response = await request.json();
-      setNews(response);
-      setLoading(false);
-    }
+  function addTotodo(event) {
+    event.preventDefault();
 
-    getData();
-  }, []);
-
+    setTodos([...todos, activity]);
+    setActivity("");
+  }
   return (
     <div style={container}>
-      <h2>Data Fect</h2>
-      {loading ? (
-        <i>Loading....</i>
-      ) : (
-        <ul>
-          {news.map(function (item) {
-            return <li key={item.id}>{item.title}</li>;
-          })}
-        </ul>
-      )}
+      <h1>Simple Todo List</h1>
+      <form onSubmit={addTotodo} style={form}>
+        <input
+          type="text"
+          placeholder="Nama Aktifitas"
+          value={activity}
+          onChange={function (event) {
+            setActivity(event.target.value);
+          }}
+        />
+        <button type="submit">Tambah</button>
+      </form>
+      <ul>
+        {todos.map(function (list, index) {
+          return <li key={index}>{list}</li>;
+        })}
+      </ul>
     </div>
   );
 }
