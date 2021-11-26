@@ -1,40 +1,19 @@
 function App() {
-  const useState = React.useState(0);
-  //   const count = state[0];
-  //   const updateState = state[1];
-  const [count, setCount] = useState;
-
-  const [click, setClick] = React.useState(false);
+  // styles
+  const container = { textAlign: "center", marginTop: "20px" };
+  const [login, setLogin] = React.useState(false);
+  const judulRef = React.useRef(null);
 
   React.useEffect(() => {
-    console.log(document.getElementById("judul"));
+    console.log(judulRef);
+    setTimeout(() => {
+      judulRef.current.textContent = "Aplikasi Dirubah";
+    }, 2000);
   }, []);
 
   return (
-    <div>
-      <div id="judul">Hello Judul</div>
-      <button
-        onClick={function () {
-          setCount(count - 1);
-        }}
-      >
-        -
-      </button>
-      <span>{count}</span>
-      <button
-        onClick={function () {
-          setCount(count + 1);
-        }}
-      >
-        +
-      </button>
-      <button
-        onClick={function () {
-          setClick(true);
-        }}
-      >
-        Klik Aku Dong!
-      </button>
+    <div style={container}>
+      <h1 ref={judulRef}>Aplications</h1>
     </div>
   );
 }
