@@ -2,17 +2,30 @@ function App() {
   // styles
   const container = { textAlign: "center", marginTop: "20px" };
 
-  const fruits = ["Apple", "Banana", "Orange", "Ganyong", "Banana"];
+  // javascript logic
+  const [name, setName] = React.useState("Johar");
 
-  console.log(fruits);
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log(`nama: ${name}`);
+  }
 
   return (
     <div style={container}>
-      <ul>
-        {fruits.map(function (fruit, index) {
-          return <li key={index}>{fruit}</li>;
-        })}
-      </ul>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name: </label>
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={function (event) {
+              setName(event.target.value);
+            }}
+          />
+        </div>
+        <button type="submit">Kirim</button>
+      </form>
     </div>
   );
 }
