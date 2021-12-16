@@ -11,10 +11,24 @@ function App() {
   const [activity, setActivity] = React.useState("");
   const [todos, setTodos] = React.useState([]);
 
+  function generateId() {
+    return Date.now();
+  }
+
   function addTotodo(event) {
     event.preventDefault();
-    setTodos([...todos, activity]);
+    setTodos([...todos, {
+      id: generateId(),
+      activity
+    }]);
     setActivity("");
+  }
+
+  function removeTodoHandler(todoId) {
+    const filteredTodos = todos.filter(function (todo) {
+      return todo.id !== todoId;
+    });
+    setTodos(filteredTodos);
   }
 
   return /*#__PURE__*/React.createElement("div", {
@@ -31,10 +45,12 @@ function App() {
     }
   }), /*#__PURE__*/React.createElement("button", {
     type: "submit"
-  }, "Tambah")), /*#__PURE__*/React.createElement("ul", null, todos.map(function (list, index) {
+  }, "Tambah")), /*#__PURE__*/React.createElement("ul", null, todos.map(function (event) {
     return /*#__PURE__*/React.createElement("li", {
-      key: index
-    }, list);
+      key: event.id
+    }, event.activity, /*#__PURE__*/React.createElement("button", {
+      onClick: () => removeTodoHandler(event.id)
+    }, "Hapus"));
   })));
 }
 
