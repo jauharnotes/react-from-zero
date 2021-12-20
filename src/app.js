@@ -1,4 +1,8 @@
+// import React from "react";
+// import UseState from "./materi/hook/UseState";
+
 function App() {
+  <>{/* <UseState /> */}</>;
   // styles
   const container = {
     textAlign: "center",
@@ -9,13 +13,28 @@ function App() {
   // javascript logic
   const [activity, setActivity] = React.useState("");
   const [todos, setTodos] = React.useState([]);
+  const [edit, setEdit] = React.useState([]);
 
   function generateId() {
     return Date.now();
   }
 
-  function addTotodo(event) {
+  function saveTotodoHandler(event) {
     event.preventDefault();
+
+    if (edit.id) {
+      const updatetodo = {
+        id: edit.id,
+        activity,
+      };
+      const editTodoId = todos.findIndex(function (todo) {
+        return todo.id === edit.id;
+      });
+
+      console.log(editTodoId);
+
+      return;
+    }
 
     setTodos([
       ...todos,
@@ -25,6 +44,11 @@ function App() {
       },
     ]);
     setActivity("");
+  }
+
+  function handleEdit(todo) {
+    setActivity(todo.activity);
+    setEdit(todo);
   }
 
   function removeTodoHandler(todoId) {
@@ -38,7 +62,7 @@ function App() {
   return (
     <div style={container}>
       <h1>Simple Todo List</h1>
-      <form onSubmit={addTotodo} style={form}>
+      <form onSubmit={saveTotodoHandler} style={form}>
         <input
           type="text"
           placeholder="Nama Aktifitas"
@@ -47,14 +71,18 @@ function App() {
             setActivity(event.target.value);
           }}
         />
-        <button type="submit">Tambah</button>
+        <button type="submit">{edit.id ? "Simpan perubahan" : "Tambah"}</button>
       </form>
       <ul>
         {todos.map(function (event) {
           return (
             <li key={event.id}>
               {event.activity}
-              <button onClick={() => removeTodoHandler(event.id)}>Hapus</button>
+              {/* <button onClick={() => removeTodoHandler(event.id)}>Hapus</button> */}
+              <button onClick={handleEdit.bind(this, event)}>Edit</button>
+              <button onClick={removeTodoHandler.bind(this, event.id)}>
+                Hapus
+              </button>
             </li>
           );
         })}
